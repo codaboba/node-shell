@@ -1,26 +1,25 @@
-const pwdModule = require('./pwd');
-const ls = require('./ls');
-const cat = require('./cat');
+const pwd = require('./pwd').pwd;
+const ls = require('./ls').ls;
+const cat = require('./cat').cat;
 
 process.stdout.write('prompt > ');
 
 process.stdin.on('data', (data) => {
-  const fullcmd = data.toString().split(' ');
-  const cmd = fullcmd[0];
-  const cmdarguments = fullcmd.slice(1);
-  console.log(cmdarguments); //file names read also read in the endline
+  const cmd = data.toString().trim().split(' ')[0];
+  const args = data.toString().trim().split(' ').slice(1)
+  console.log(args); //file names read also read in the endline
 
   if (cmd === 'pwd') {
-    pwdModule.pwd();
+    pwd();
   }
-  else if (cmd === 'ls'){
-      ls();
+  else if (cmd === 'ls') {
+    ls();
   }
-  else if (cmd === 'cat'){
-    cat.cat(cmdarguments);
+  else if (cmd === 'cat') {
+    cat(args);
   }
   else {
     process.stdout.write('You typed: ' + cmd);
-    process.stdout.write('\nprompt > ');
+    process.stdout.write('prompt > ');
   }
 });
